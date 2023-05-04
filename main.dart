@@ -1,12 +1,30 @@
 import 'package:flutter/material.dart';
 
-main() {
-  runApp(atv1());
+void main() {
+  runApp(dever());
 }
-class atv1 extends StatelessWidget {
+
+class dever extends StatefulWidget {
+  @override
+  State<dever> createState() => _deverState();
+}
+
+class _deverState extends State<dever> {
+  var contador = 0;
+  final perguntas = [    
+    "Qual a sua cor favorita",    
+    "Qual o seu animal favorito",    
+    "Qual o seu carro favorito",    
+    
+    "Qual o seu signo favorito",  ];
+
   void clicou() {
-    print("teste");
+    setState(() {
+     contador = (contador + 1) % perguntas.length;
+    });
+    print(contador);
   }
+
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
@@ -15,22 +33,10 @@ class atv1 extends StatelessWidget {
         ),
         body: Column(
           children: [
-            Text("Aprendendo sobre Flutter"),
-            Text("Aula CEFET G2"),
-            Row(
-              children: [
-                ElevatedButton(onPressed: clicou, child: Text('Enviar')),
-                ElevatedButton(onPressed: clicou, child: Text('Cancelar')),
-                ElevatedButton(onPressed: clicou, child: Text('Salvar')),
-              ],
-            ),
-            Column(
-              children: [
-                Text("Aprendendo"),
-                Text("Programação"),
-                Text("Flutter"),
-              ],
-            ),
+            Text(perguntas[contador]),
+            ElevatedButton(onPressed: clicou, child: Text('Clique aqui')),
+            ElevatedButton(onPressed: clicou, child: Text('Cancelar')),
+            ElevatedButton(onPressed: clicou, child: Text('Salvar')),
           ],
         ),
       ),

@@ -1,42 +1,55 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(dever());
+  runApp(MaterialApp(
+    home: ButtonGenerator(),
+  ));
 }
 
-class dever extends StatefulWidget {
+class ButtonGenerator extends StatefulWidget {
   @override
-  State<dever> createState() => _deverState();
+  _ButtonGeneratorState createState() => _ButtonGeneratorState();
 }
 
-class _deverState extends State<dever> {
-  var contador = 0;
-  final perguntas = [    
-    "Qual a sua cor favorita",    
-    "Qual o seu animal favorito",    
-    "Qual o seu carro favorito",    
-    
-    "Qual o seu signo favorito",  ];
+class _ButtonGeneratorState extends State<ButtonGenerator> {
+  List<Widget> _buttonList = [];
+  String _buttonText = '';
 
-  void clicou() {
-    setState(() {
-     contador = (contador + 1) % perguntas.length;
-    });
-    print(contador);
-  }
-
+  @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text("Meu primeiro App"),
-        ),
-        body: Column(
-          children: [
-            Text(perguntas[contador]),
-            ElevatedButton(onPressed: clicou, child: Text('Clique aqui')),
-            ElevatedButton(onPressed: clicou, child: Text('Cancelar')),
-            ElevatedButton(onPressed: clicou, child: Text('Salvar')),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Gerador de Botões'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            TextField(
+              onChanged: (text) {
+                setState(() {
+                  _buttonText = text;
+                });
+                print(_buttonText);
+              },
+            ),
+            ElevatedButton(
+              child: Text('Gerar botão'),
+              onPressed: () {
+                setState(() {
+                  _buttonList.add(ElevatedButton(
+                    child: Text(_buttonText),
+                    onPressed: () {
+                      print('Botão gerado dinamicamente!');
+                    },
+                  ));
+                });
+              },
+            ),
+            SizedBox(height: 14.0),
+            Column(
+              children: _buttonList,
+            ),
           ],
         ),
       ),
